@@ -1,0 +1,41 @@
+# ================================================================
+# EDIT THIS FILE TO PERSONALIZE YOUR WEBSITE
+# ================================================================
+# This is the main file participants need to edit for the homepage.
+
+name = "Your Name"
+title = "PhD Student in Applied Mathematics"
+institution = "Your University"
+email = "you@university.edu"
+location = "City, State"
+avatar = "images/avatar.svg"
+
+# Keep this short: usually 2-4 sentences.
+about = "I am a graduate student interested in applied mathematics and scientific computing. My work focuses on developing computational methods for challenging problems in science and engineering."
+
+# Add, remove, or reorder items as needed.
+education = [
+  "Ph.D. in Applied Mathematics, Your University (expected 20XX)",
+  "M.S. in Mathematics, Previous University (20XX)"
+]
+
+research_interests = [
+  "Numerical linear algebra",
+  "Scientific computing",
+  "Optimization",
+  "Machine learning"
+]
+
+# CV tab
+# Upload your PDF as static/files/cv.pdf.
+# A sample PDF is included, so the CV tab works immediately.
+# Replace static/files/cv.pdf with your own CV; no code changes are needed.
+# Change this path only if you use a different filename.
+cv = "files/cv.pdf"
+
+# Leave a URL empty ("") to hide that icon.
+[social]
+linkedin = "https://www.linkedin.com/in/YOUR-USERNAME/"
+scholar = ""
+orcid = ""
+github = "https://github.com/YOUR-USERNAME"

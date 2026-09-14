@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <script>
+    (function () {
+      try {
+        const html = document.documentElement;
+        const theme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (theme === 'dark' || (!theme && prefersDark)) html.classList.add('dark');
+      } catch (e) {}
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ .Site.Data.profile.about | plainify | truncate 160 }}">
+  <title>{{ if .IsHome }}{{ .Site.Data.profile.name }}{{ else }}{{ .Title }} | {{ .Site.Data.profile.name }}{{ end }}</title>
+  <link rel="stylesheet" href="{{ "css/styles.css" | relURL }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+</head>
+
+<body class="bg-gradient-to-br from-gray-50 via-white to-gray-200 text-gray-900 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-black dark:text-gray-100 font-sans min-h-screen flex flex-col">
+  <!-- Workshop template adapted from the academic website of Harshit Bhatt. -->
+  <div class="hidden dark:bg-black dark:text-white dark:border-gray-700"></div>
+
+  <header class="site-header bg-white dark:bg-gray-900 bg-opacity-90 dark:bg-opacity-80 backdrop-blur-md sticky top-0 z-50">
+    <div class="container mx-auto flex justify-between items-center py-4 px-6">
+      <h1 class="site-brand-text font-semibold tracking-wide">
+        <a href="{{ "" | relURL }}" class="site-brand transition">
+          {{ if .IsHome }}Home{{ else }}{{ .Site.Data.profile.name }}{{ end }}
+        </a>
+      </h1>
+
+      <div class="flex items-center md:hidden">
+        <button id="theme-toggle-mobile" class="theme-button text-2xl p-2 rounded-full transition" aria-label="Toggle dark mode">
+          <i class="far fa-moon"></i>
+        </button>
+        <button id="mobile-menu-button" class="ml-4 flex justify-center items-center w-8 h-8" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <svg id="hamburger-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+          <svg id="cross-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+
+      {{ $sec := .Section }}
+      {{ $menuSections := sort (where .Site.Sections "Params.menu" true) "Params.weight" }}
+      {{ $cv := .Site.Data.profile.cv }}
+      {{ $hasCV := and $cv (ne $cv "") (fileExists (printf "static/%s" $cv)) }}
+
+      <nav class="site-nav hidden md:flex items-center space-x-6" aria-label="Primary navigation">
+        {{ range $menuSections }}
+          {{ $active := eq $sec .Section }}
+          <a href="{{ .RelPermalink }}" class="nav-link {{ if $active }}nav-link-active{{ end }}" {{ if $active }}aria-current="page"{{ end }}>{{ .Title }}</a>
+        {{ end }}
+        {{ if $hasCV }}
+          <a href="{{ $cv | relURL }}" target="_blank" rel="noopener" class="nav-link">CV</a>
+        {{ end }}
+        <button id="theme-toggle-desktop" class="theme-button text-2xl p-2 rounded-full transition" aria-label="Toggle dark mode">
+          <i class="far fa-moon"></i>
+        </button>
+      </nav>
+
+      <div id="mobile-menu" class="hidden md:hidden mobile-menu absolute top-16 left-0 w-full bg-white dark:bg-gray-900 py-4">
+        {{ range $menuSections }}
+          {{ $active := eq $sec .Section }}
+          <a href="{{ .RelPermalink }}" class="mobile-nav-link block py-2 px-6 {{ if $active }}mobile-nav-link-active{{ end }}" {{ if $active }}aria-current="page"{{ end }}>{{ .Title }}</a>
+        {{ end }}
+        {{ if $hasCV }}
+          <a href="{{ $cv | relURL }}" target="_blank" rel="noopener" class="mobile-nav-link block py-2 px-6">CV</a>
+        {{ end }}
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow container mx-auto px-6 py-12 max-w-5xl text-gray-900 dark:text-gray-100">
+    {{ block "main" . }}{{ end }}
+  </main>
+
+  <button id="back-to-top" class="back-to-top" type="button" aria-label="Go to top" title="Go to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </button>
+
+  <footer class="site-footer bg-white dark:bg-gray-900 bg-opacity-90 dark:bg-opacity-80 backdrop-blur-md text-center text-gray-500 dark:text-gray-400 py-6 border-t border-gray-200 dark:border-gray-700">
+  &copy; {{ now.Year }} {{ .Site.Data.profile.name }}.
+  Built with
+  <a href="https://github.com/BhattHarshit/academic-starter"
+     target="_blank"
+     rel="noopener noreferrer"
+     class="hover:text-teal-600 dark:hover:text-teal-400 hover:underline transition-colors">
+    Academic Starter</a>.
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const html = document.documentElement;
+      const buttons = [document.getElementById('theme-toggle-mobile'), document.getElementById('theme-toggle-desktop')].filter(Boolean);
+
+      function updateThemeIcons(isDark) {
+        buttons.forEach(button => {
+          const icon = button.querySelector('i');
+          if (!icon) return;
+          icon.classList.toggle('fa-moon', !isDark);
+          icon.classList.toggle('fa-sun', isDark);
+        });
+      }
+
+      function setTheme(isDark, savePreference = true) {
+        html.classList.toggle('dark', isDark);
+        if (savePreference) localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        updateThemeIcons(isDark);
+      }
+
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initialDark = stored === 'dark' || (!stored && prefersDark);
+      setTheme(initialDark, false);
+
+      buttons.forEach(button => button.addEventListener('click', () => setTheme(!html.classList.contains('dark'))));
+
+      const menuButton = document.getElementById('mobile-menu-button');
+      const menu = document.getElementById('mobile-menu');
+      const hamburger = document.getElementById('hamburger-icon');
+      const cross = document.getElementById('cross-icon');
+      if (menuButton && menu) {
+        menuButton.addEventListener('click', () => {
+          const isOpening = menu.classList.contains('hidden');
+          menu.classList.toggle('hidden');
+          hamburger.classList.toggle('hidden');
+          cross.classList.toggle('hidden');
+          menuButton.setAttribute('aria-expanded', isOpening ? 'true' : 'false');
+        });
+      }
+
+      const backToTop = document.getElementById('back-to-top');
+      if (backToTop) {
+        const updateBackToTop = () => {
+          backToTop.classList.toggle('is-visible', window.scrollY > 360);
+        };
+        updateBackToTop();
+        window.addEventListener('scroll', updateBackToTop, { passive: true });
+        backToTop.addEventListener('click', () => {
+          const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

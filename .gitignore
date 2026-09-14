@@ -1,0 +1,14 @@
+# Hugo build output
+/public/
+/resources/_gen/
+/.hugo_build.lock
+
+# Optional Node/Tailwind tooling
+/node_modules/
+
+# Editor settings
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,11 @@
+# Site settings. Most participants should NOT need to edit this file.
+# Personal information lives in data/profile.toml.
+baseURL = "https://example.org/"
+languageCode = "en-us"
+title = "Academic Website"
+disableKinds = ["taxonomy", "term"]
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

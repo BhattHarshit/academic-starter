@@ -1,0 +1,78 @@
+{{ define "main" }}
+{{ $p := .Site.Data.profile }}
+<section class="profile-intro max-w-4xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-10 items-center">
+  <div class="md:col-span-1 flex flex-col items-center">
+    {{ $avatar := $p.avatar }}
+    {{ $avatarURL := $avatar | relURL }}
+    {{ if or (hasPrefix $avatar "http://") (hasPrefix $avatar "https://") }}{{ $avatarURL = $avatar }}{{ end }}
+    <img src="{{ $avatarURL }}" alt="Portrait of {{ $p.name }}" class="profile-avatar rounded-full w-40 h-40 object-cover mb-5">
+
+    <div class="profile-social flex justify-center space-x-3" aria-label="Academic and professional links">
+      {{ with $p.social.linkedin }}{{ if ne . "" }}
+      <a href="{{ . }}" target="_blank" rel="noopener" aria-label="LinkedIn" class="social-link">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+      {{ end }}{{ end }}
+
+      {{ with $p.social.scholar }}{{ if ne . "" }}
+      <a href="{{ . }}" target="_blank" rel="noopener" aria-label="Google Scholar" class="social-link">
+        <i class="fas fa-graduation-cap"></i>
+      </a>
+      {{ end }}{{ end }}
+
+      {{ with $p.social.orcid }}{{ if ne . "" }}
+      <a href="{{ . }}" target="_blank" rel="noopener" aria-label="ORCID" class="social-link">
+        <i class="fab fa-orcid"></i>
+      </a>
+      {{ end }}{{ end }}
+
+      {{ with $p.social.github }}{{ if ne . "" }}
+      <a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub" class="social-link">
+        <i class="fab fa-github"></i>
+      </a>
+      {{ end }}{{ end }}
+    </div>
+  </div>
+
+  <div class="md:col-span-2 space-y-4 text-center md:text-left">
+    <h1 class="profile-name text-4xl font-bold text-gray-900 dark:text-gray-100">{{ $p.name }}</h1>
+    <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">{{ $p.title }}<br>{{ $p.institution }}</p>
+
+    <div class="profile-contact space-y-2 pt-1">
+      {{ with $p.email }}{{ if ne . "" }}
+      <p class="text-gray-600 dark:text-gray-400 flex items-center justify-center md:justify-start space-x-2">
+        <i class="fas fa-envelope" aria-hidden="true"></i>
+        <a href="mailto:{{ . }}" class="profile-link">{{ . }}</a>
+      </p>
+      {{ end }}{{ end }}
+
+      {{ with $p.location }}{{ if ne . "" }}
+      <p class="text-gray-600 dark:text-gray-400 flex items-center justify-center md:justify-start space-x-2">
+        <i class="fas fa-location-dot" aria-hidden="true"></i>
+        <span>{{ . }}</span>
+      </p>
+      {{ end }}{{ end }}
+    </div>
+  </div>
+</section>
+
+<section class="home-section max-w-4xl mx-auto px-6 py-8">
+  <h2 class="section-heading text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-5">About Me</h2>
+  <p class="text-gray-700 dark:text-gray-300 mb-5 leading-relaxed">{{ $p.about }}</p>
+
+  {{ with $p.education }}
+  <ul class="academic-list text-gray-700 dark:text-gray-300 space-y-2">
+    {{ range . }}<li>{{ . }}</li>{{ end }}
+  </ul>
+  {{ end }}
+</section>
+
+<section class="home-section max-w-4xl mx-auto px-6 py-8">
+  <h2 class="section-heading text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-5">Research Interests</h2>
+  {{ with $p.research_interests }}
+  <ul class="academic-list text-gray-700 dark:text-gray-300 space-y-2">
+    {{ range . }}<li>{{ . }}</li>{{ end }}
+  </ul>
+  {{ end }}
+</section>
+{{ end }}
