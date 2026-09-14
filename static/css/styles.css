@@ -276613,3 +276613,30 @@ html.dark .home-attribution a:hover,
 html.dark .home-attribution a:focus-visible {
   color: #99f6e4;
 }
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.footer-inner {
+  width: 100%;
+  padding: 1.15rem 1rem;
+  text-align: center;
+}
+
+.footer-link {
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration: none;
+  text-underline-offset: 0.16em;
+  transition:
+    color 140ms ease,
+    text-decoration-color 140ms ease;
+}
+
+.footer-link:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
