@@ -16,12 +16,14 @@ A simple Hugo template for creating and maintaining a professional academic webs
   </a>
 </p>
 
-## Quick Start
-1. Create a Github account if you don't have one and login with that.
-2. Click **Use this template** on the top right corner.
-3. Create a **new repository** and name it: `your_Github_username.github.io`
+## Quick start
+
+1. Create a GitHub account if you don't have one and log in with it.
+2. Click **Use this template** in the top right corner.
+3. Create a **new repository** and name it: `your_Github_username.github.io`. 
 4. Open **Settings → Pages** and under **Build and deployment**, set **Source** to **GitHub Actions**.
-5. Your website will be available at:  `https://your_Github_username.github.io/`
+5. Edit `data/profile.toml` slightly and commit changes. (OR, open **Actions → Deploy Hugo site to GitHub Pages → Run workflow**.)
+4. Your website will be available at:  `https://your_Github_username.github.io/`
 5. Edit `data/profile.toml` to update your information and replace `static/images/avatar.svg` and `static/files/cv.pdf` with your files.
 
 GitHub Actions will automatically build and publish the site.
