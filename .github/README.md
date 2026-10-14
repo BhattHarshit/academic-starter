@@ -4,7 +4,7 @@ A simple Hugo template for creating and maintaining a professional academic webs
 
 <p align="center">
   <a href="https://bhattharshit.github.io/academic-starter/">
-    <img src="static/images/demo.gif"
+    <img src="../static/images/demo.gif"
          alt="Academic Website Template Demo"
          width="900">
   </a>
@@ -17,13 +17,12 @@ A simple Hugo template for creating and maintaining a professional academic webs
 </p>
 
 ## Quick Start
-
-1. Click **Use this template → Create a new repository**.
-2. Go to **Settings → Pages** and set **Source** to **GitHub Actions**.
-3. Edit `data/profile.toml` with your information.
-4. Replace the profile image and `static/files/cv.pdf`.
-5. Edit the Research, Teaching, and Talks pages as needed.
-6. Commit your changes to `main`.
+1. Create a Github account if you don't have one and login with that.
+2. Click **Use this template** on the top right corner.
+3. Create a **new repository** and name it: `your_Github_username.github.io`
+4. Open **Settings → Pages** and under **Build and deployment**, set **Source** to **GitHub Actions**.
+5. Your website will be available at:  `https://your_Github_username.github.io/`
+5. Edit `data/profile.toml` to update your information and replace `static/images/avatar.svg` and `static/files/cv.pdf` with your files.
 
 GitHub Actions will automatically build and publish the site.
 
